@@ -19,6 +19,12 @@ function layoutDiv() {
     return el;
   }
   el += `<div class="article-footer${scrollreveal(' ')}">`
+  el += `
+    <section id="xs-author">
+      <div class="header"><span>${__('meta.xs_author')}</span></div>
+      <div class="body">${markdown(page.author)}</div>
+    </section>
+  `
   if (page.references?.length > 0) {
     function refList() {
       var el = '';

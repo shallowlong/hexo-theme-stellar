@@ -43,6 +43,7 @@ meta:
     hour: 小时前
     day: 天前
     month: 个月前
+  xs_author: 文章作者
 
 page:
   error:

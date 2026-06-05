@@ -43,6 +43,7 @@ meta:
     hour: hours ago
     day: days ago
     month: months ago
+  xs_author: Article Author
 
 page:
   error:
