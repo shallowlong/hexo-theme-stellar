@@ -1,7 +1,7 @@
 btn:
   home: 主页
   blog: 文章
-  wiki: 文档
+  wiki: 项目
   topic: 系列
   notebook: 笔记本
   recent_publish: 近期发布
@@ -19,6 +19,9 @@ btn:
 
 meta:
   recent_update: 最近更新
+  recent_update_post: 最近更新 · 记录
+  recent_update_topic: 最近更新 · 系列
+  recent_update_wiki: 最近更新 · 项目
   tag_tree: 标签
   all_notes: 所有笔记
   toc: 本文目录

@@ -1,7 +1,7 @@
 btn:
   home: Home
   blog: Blog
-  wiki: Wiki
+  wiki: Product
   topic: Topic
   notebook: Notebook
   recent_publish: Recent
@@ -19,6 +19,9 @@ btn:
 
 meta:
   recent_update: Recent Update
+  recent_update_post: Recent Records
+  recent_update_topic: Recent Series
+  recent_update_wiki: Recent Projects
   tag_tree: Tags
   all_notes: All Notes
   toc: On This Page

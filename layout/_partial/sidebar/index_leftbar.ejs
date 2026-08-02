@@ -21,11 +21,11 @@ if (page.leftbar == null) {
   } else if (is_category() || is_tag() || is_archive() || ['categories', 'tags', 'archives'].includes(page.layout)) {
     sidebar = site_tree.index_blog.leftbar
   } else if (page.layout === 'index_topic') {
-    // 专栏列表页等同于博客列表页
-    sidebar = site_tree.index_blog.leftbar
+    // 专栏列表页，优先使用 site_tree.index_topic.leftbar，否则回退到博客列表页
+    sidebar = site_tree.index_topic?.leftbar || site_tree.index_blog.leftbar
   } else if (page.topic?.length > 0) {
-    // 专栏文章内页等同于普通文章内页
-    sidebar = site_tree.post.leftbar
+    // 专栏文章内页，优先使用 site_tree.topic.leftbar，否则回退到普通文章内页
+    sidebar = site_tree.topic?.leftbar || site_tree.post.leftbar
   } else if (page.layout === 'index_wiki') {
     sidebar = site_tree.index_wiki.leftbar
   } else if (page.wiki?.length > 0) {

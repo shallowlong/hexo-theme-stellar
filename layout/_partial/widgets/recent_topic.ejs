@@ -1,0 +1,41 @@
+<%
+function layoutDiv() {
+  var el = `<widget class="widget-wrapper${scrollreveal(' ')} recent post-list">`
+  // header
+  el += '<div class="widget-header dis-select">';
+  el += '<span class="name">' + (item.title || __("meta.recent_update_topic")) + '</span>';
+  if (item.rss) {
+    el += '<a class="cap-action" id="rss" title="Subscribe" href="' + item.rss + '">';
+    el += icon('default:rss')
+    el += '</a>';
+  }
+  el += '</div>';
+  // body
+  var arr = [];
+  // 只取绑定了 topic 的文章
+  arr = site.posts.filter(p => p.title && p.title.length > 0 && p.topic && p.topic.length > 0)
+  arr = arr.sort("updated", -1)
+  el += '<div class="widget-body fs14">'
+  arr = arr.filter(p => p.title?.length > 0)
+  arr.length = item.limit
+  arr.forEach(post => {
+    if (!post) { return }
+    el += `<a class="item title" href="${pretty_url(post.link || post.path)}">`
+    el += '<span class="title">'
+    if (post.topic) {
+      const topic = theme.topic.tree[post.topic];
+      let name = topic?.name || post?.topic;
+      if (name) {
+        el += '<strong>' + name + '</strong>' + '<span class="dot"></span>';
+      }
+    }
+    el += post.title + '</span>';
+    el += '</a>';
+    el += '';
+  });
+  el += '</div>';
+  el += '</widget>';
+  return el;
+}
+%>
+<%- layoutDiv() %>
