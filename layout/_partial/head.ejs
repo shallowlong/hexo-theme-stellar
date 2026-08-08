@@ -139,9 +139,6 @@ function generate_canonical() {
     if (path.startsWith('/404') || path.startsWith('404')) {
       return '';
     }
-    if (path.endsWith('.html') && path.length > 5) {
-      path = path.split('.html')[0];
-    }
     return `<link rel="canonical" href="https://${originalHost}${path}">`;
   }
   return '';
@@ -187,6 +184,7 @@ function generate_canonical() {
     <% }) %>
   <% } %>
 
+  <link rel="preload" href="<%- url_for(`${theme.stellar.main_css}?v=${stellar_info('version')}`) %>" as="style">
   <link rel="stylesheet" href="<%- url_for(`${theme.stellar.main_css}?v=${stellar_info('version')}`) %>">
 
 

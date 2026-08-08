@@ -37,10 +37,11 @@ const util = {
     const el = document.getElementById(id);
     if (el) {
       el.select();
-      document.execCommand("Copy");
-      if (msg && msg.length > 0) {
-        hud.toast(msg, 2500);
-      }
+      navigator.clipboard.writeText(el.value).then(() => {
+        if (msg && msg.length > 0) {
+          hud.toast(msg, 2500);
+        }
+      }).catch(() => {});
     }
   },
 
@@ -314,7 +315,3 @@ stellar.initPage = function () {
 stellar.initPage();
 init.canonicalCheck();
 
-// Listen for PJAX navigation complete
-document.addEventListener('pjax:complete', function () {
-  stellar.initPage();
-});

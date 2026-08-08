@@ -1,6 +1,6 @@
 ######## Stellar info ########
 stellar:
-  version: '1.33.1'
+  version: '1.35.0'
   homepage: 'https://xaoxuu.com/wiki/stellar/'
   repo: 'https://github.com/xaoxuu/hexo-theme-stellar'
   main_css: /css/main.css
@@ -9,9 +9,10 @@ stellar:
 
 ######## head tags ########
 preconnect:
-  # - https://gcore.jsdelivr.net
-  # - https://gcore.jsdelivr.net
-  # - https://unpkg.com
+  - https://gcore.jsdelivr.net
+  - https://unpkg.com
+  - https://cdn.jsdelivr.net
+  - https://cdnjs.cloudflare.com
 
 # 一旦设置源站地址，非源站地址将不会被SEO收录，并且访问时弹出提示
 # 如果访问地址不在备用站主机列表，则警告信息为非法克隆
@@ -453,7 +454,7 @@ tag_plugins:
 
 # 基础依赖
 dependencies:
-  jquery: https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js
+  jquery: https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.slim.min.js
   marked: https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js
   lazyload:
     js: https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js
@@ -535,15 +536,6 @@ plugins:
     enable: true
     service: flying_pages # flying_pages
     flying_pages: https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js
-
-  # pjax - 无刷新加载
-  # 启用后点击链接将使用 AJAX 加载内容，无需整页刷新
-  pjax:
-    enable: false # 还在测试中，可能存在兼容问题
-    selectors: ['title', '#l_cover', '.l_body'] # 需要替换的元素选择器
-    timeout: 10000 # 请求超时时间（毫秒）
-    cacheBust: false # 是否添加时间戳防止缓存
-    translate-distance: 8px # 动画
 
   # https://fancyapps.com/docs/ui/fancybox/
   # available for {% image xxx %}
