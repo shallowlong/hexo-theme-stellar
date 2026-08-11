@@ -4,7 +4,10 @@ btn:
   wiki: 項目
   topic: 專欄
   notebook: 筆記本
-  recent_publish: 近期發布
+  recent_publish: 近期發布·所有
+  recent_publish_post: 近期發布·記錄
+  recent_publish_topic: 近期發布·系列
+  recent_publish_wiki: 近期發布·項目
   all_wiki: 所有項目
   category: 分類
   categories: 分類

@@ -4,7 +4,10 @@ btn:
   wiki: 项目
   topic: 系列
   notebook: 笔记本
-  recent_publish: 近期发布
+  recent_publish: 近期发布·所有
+  recent_publish_post: 近期发布·记录
+  recent_publish_topic: 近期发布·系列
+  recent_publish_wiki: 近期发布·项目
   all_wiki: 所有项目
   category: 分类
   categories: 分类

@@ -38,6 +38,9 @@ if (page.leftbar == null) {
     sidebar = site_tree.post.leftbar
   } else if (page.layout == null) {
     sidebar = site_tree.page.leftbar
+  } else if (page.__xs_index_blog == true) {
+    // 近期发布·记录 页面
+    sidebar = site_tree.index_blog?.leftbar
   } else {
     sidebar = []
   }

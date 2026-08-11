@@ -4,7 +4,10 @@ btn:
   wiki: Product
   topic: Topic
   notebook: Notebook
-  recent_publish: Recent
+  recent_publish: Recent·All
+  recent_publish_post: Recent·Records
+  recent_publish_topic: Recent·Series
+  recent_publish_wiki: Recent·Projects
   all_wiki: All Products
   category: Category
   categories: Categories

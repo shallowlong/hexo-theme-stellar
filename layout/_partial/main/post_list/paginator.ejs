@@ -1,4 +1,4 @@
-<% if ((is_home() || is_category() || is_tag()) && page.total > 1) { %>
+<% if ((is_home() || is_category() || is_tag() || page.__xs_index_blog) && page.total > 1) { %>
   <div class='paginator-wrap dis-select<%- scrollreveal(' ') %>'>
   <%- paginator({
     prev_text: '',

@@ -11,6 +11,36 @@ function layoutDiv() {
     el += '<a href="' + pretty_url(config.index_generator.path) + '">' + __("btn.recent_publish") + '</a>';
   }
 
+  // 近期发布·记录
+  if (theme.site_tree?.index_blog?.base_dir) {
+    var recordUrl = pretty_url(theme.site_tree.index_blog.base_dir);
+    if (page.__xs_index_blog == true) {
+      el += '<a class="active" href="' + recordUrl + '">' + __("btn.recent_publish_post") + '</a>';
+    } else {
+      el += '<a href="' + recordUrl + '">' + __("btn.recent_publish_post") + '</a>';
+    }
+  }
+
+  // 近期发布·系列
+  if (theme.topic?.publish_list?.length > 0) {
+    var topicUrl = pretty_url(theme.site_tree.index_topic.base_dir);
+    if (page.layout == 'index_topic') {
+      el += '<a class="active" href="' + topicUrl + '">' + __("btn.recent_publish_topic") + '</a>';
+    } else {
+      el += '<a href="' + topicUrl + '">' + __("btn.recent_publish_topic") + '</a>';
+    }
+  }
+
+  // 近期发布·项目
+  if (theme.wiki?.shelf?.length > 0) {
+    var wikiUrl = pretty_url(theme.site_tree.index_wiki.base_dir);
+    if (page.layout == 'index_wiki') {
+      el += '<a class="active" href="' + wikiUrl + '">' + __("btn.recent_publish_wiki") + '</a>';
+    } else {
+      el += '<a href="' + wikiUrl + '">' + __("btn.recent_publish_wiki") + '</a>';
+    }
+  }
+
   if (site.categories && site.categories.length > 0) {
     if (page.category) {
       el += '<a class="active" href="' + pretty_url(config.category_dir) + '">' + __("btn.category") + __("symbol.colon") + page.category + '</a>';
@@ -31,6 +61,7 @@ function layoutDiv() {
     }
   }
   
+  /*
   if (theme.topic?.publish_list?.length > 0) {
     if (page.layout == 'index_topic') {
       el += '<a class="active" href="' + pretty_url(theme.site_tree.index_topic.base_dir) + '">' + __("btn.topic") + '</a>';
@@ -38,6 +69,7 @@ function layoutDiv() {
       el += '<a href="' + pretty_url(theme.site_tree.index_topic.base_dir) + '">' + __("btn.topic") + '</a>';
     }
   }
+  */
   
   if (site.posts && site.posts.length > 0) {
     if (is_archive()) {
