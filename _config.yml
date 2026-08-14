@@ -1,6 +1,6 @@
 ######## Stellar info ########
 stellar:
-  version: '1.38.0'
+  version: '1.39.1'
   homepage: 'https://xaoxuu.com/wiki/stellar/'
   repo: 'https://github.com/xaoxuu/hexo-theme-stellar'
   main_css: /css/main.css
@@ -180,6 +180,8 @@ notebook:
 
 ######## Article ########
 article:
+  # 置顶文章样式：carousel = 轮播（默认）， flat = 平铺（不渲染轮播，置顶文章在首页文章列表靠前展示，排序规则与轮播一致）
+  pin_style: carousel
   # 文章类型，决定布局风格，可以在 front-matter/topic/wiki 中覆盖此参数
   type: tech # tech: 默认技术类文章, story: 图文类文章，文字和段落间增距大
   # 缩进两个文字宽度，适合文字类博客，可以在 front-matter/topic/wiki 中覆盖此参数
@@ -670,7 +672,7 @@ style:
     card-l: 24px # 侧边栏、文章横幅位置的圆角
     card: 16px # 文章内大部分卡片的圆角
     card-s: 12px # 文章内小型卡片的圆角
-    bar: 8px # 横条类元素的圆角
+    bar: 12px # 横条类元素的圆角
     image-l: 24px # 非技术类文章插图圆角
     image: 16px # 技术类文章插图圆角
     image-s: 8px # 评论区图片圆角（部分评论支持）
@@ -682,7 +684,6 @@ style:
     link: 'hsl(207 90% 54%)' # 超链接颜色
   animated_avatar:
     animate: auto # auto, always
-    background: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp
   codeblock:
     scrollbar: 4px
     highlightjs_theme: https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/styles/atom-one-dark.min.css
@@ -692,8 +693,10 @@ style:
   gradient: # https://webgradients.com/
     start: 'linear-gradient(to right, hsl(215, 95%, 64%), hsl(195, 95%, 60%), hsl(165, 95%, 56%), hsl(165, 95%, 56%), hsl(195 95% 60%), hsl(215, 95%, 64%))'
     searchbar: 'linear-gradient(to right, #04f3ff, #08ffc6, #ddf730, #ffbd19, #ff1fe0, #c418ff, #3b5bff, #04f3ff)' # 搜索条激活时底部横条的渐变色（彩虹，收尾经蓝色平滑过渡）
+    avatar: 'conic-gradient(from 0deg, #04f3ff, #08ffc6, #ddf730, #ffbd19, #ff1fe0, #c418ff, #3b5bff, #04f3ff)' # 头像 hover 时旋转光环的渐变色（彩虹，首尾同色保证旋转无缝）
     angle: 210deg # 主题色渐变的角度（0=向上，顺时针；225deg = 右上角 → 左下角）
   leftbar:
+    ui-style: card # glass（背景图+磨砂玻璃效果）/ card（纯色卡片：var(--card) 实色背景 + 中间阴影）
     # 可以设置：纯色/渐变色/图片作为背景
     # 设置为纯色时，可以分别设置浅色和深色模式背景色
     background-color-light: var(--card) # var(--block) #'rgb(#C3C3C3)'
@@ -702,9 +705,6 @@ style:
     blur-px: 100px
     blur-bg: var(--bg-a60)
     background-opacity: 0.8
-  paginator:
-    prev: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
-    next: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
   error_page: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
   site: # 使用 background-image 后，blur 设置才有效
     # background-image: url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.14/image/site-bg1@small.webp)
