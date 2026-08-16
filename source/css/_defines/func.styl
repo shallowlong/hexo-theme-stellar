@@ -1,9 +1,9 @@
-svg-mask-icon($svg)
-  -webkit-mask-image: url($svg)
+svg-mask-icon($img)
+  -webkit-mask-image: $img
   -webkit-mask-repeat: no-repeat
   -webkit-mask-position: center
   -webkit-mask-size: contain
-  mask-image: url($svg)
+  mask-image: $img
   mask-repeat: no-repeat
   mask-position: center
   mask-size: contain
@@ -108,6 +108,31 @@ hover-block($v, $h, $br = 4px)
   trans2 color background
   &:hover
     background: var(--block-border)
+
+// 标签胶囊（标签页 /blog/tags/ 与文章底部标签复用；间距由容器负边距抵消）
+tag-chip()
+  display: inline-flex
+  align-items: center
+  position: relative
+  color: var(--text-p2)
+  margin: .5rem
+  padding: .5em .75rem
+  border-radius: 999px
+  background: var(--block)
+  font-size: $fs-13
+  font-weight: 500
+  trans1 all
+  svg
+    width: 1em
+    height: 1em
+    margin-right: .25em
+    opacity: .4
+  &:hover
+    color: var(--text)
+    background: var(--block-border)
+    svg
+      color: var(--theme)
+      opacity: 1
 
 floatable-trans()
   trans2 transform box-shadow

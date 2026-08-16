@@ -354,10 +354,10 @@ notebook:
 | `pin_style` | `carousel` / `flat` | `carousel` | 置顶文章展示样式：carousel 轮播；flat 平铺（不渲染轮播，置顶文章在首页列表靠前展示，排序规则与轮播一致） |
 | `cover_ratio` | Number | `2` | 文章卡片封面宽高比 |
 | `banner_ratio` | Number | `2.5` | 文章横幅宽高比 |
-| `auto_banner` | Boolean | `false` | 根据标签自动从 Unsplash 获取横幅 |
 | `auto_excerpt` | Number | `128` | 自动摘要提取字符数 |
 | `reading_time` | Boolean | `false` | 文章页显示字数与预计阅读时长 |
 | `card_tags` | Boolean | `false` | 文章卡片显示标签（最多 5 个） |
+| `tags` | Boolean | `true` | 文章页末尾（`article-footer` 之前）显示本文标签，链接到对应标签页 |
 | `ai_label` | Object | 四档默认 | 文章 AI 成分标签：`manual` / `polished` / `generated` / `reviewed` 的文字颜色（无底色）与可选 `icon`，front-matter 用 `ai_label` 字段选择；文案由多语言系统提供（`languages/*.yml` 的 `meta.ai_label.*`，缺失时不渲染）；`default` 为空时未标记文章不渲染，非空时未标记文章按默认档渲染；banner 含图片时文字用默认颜色 |
 | `license` | String/Boolean | 许可文本 | 文章默认许可声明 |
 | `share` | Array | `[]` | 分享按钮：`wechat`、`weibo`、`email`、`link` |
@@ -569,8 +569,8 @@ flowchart TD
 | `avatar` | 用户头像 | 默认头像 |
 | `cover` | 文章封面 | 缺失封面的占位 |
 | `banner` | 文章横幅 | 默认头图 |
-| `loading` | 加载指示 | 加载动画 SVG |
-| `image_onerror` | 图片加载失败兜底 | 图片加载失败时显示的图标 |
+| `loading` | 加载指示 | 加载动画 SVG（兼容回退，新值位于 `_data/icons.yml` 的 `default:loading-placeholder`） |
+| `image_onerror` | 图片加载失败兜底 | 图片加载失败时显示的图标（兼容回退，新值位于 `_data/icons.yml` 的 `image:onerror`） |
 
 这些默认值避免出现破图，保证资源缺失时的一致性体验。
 

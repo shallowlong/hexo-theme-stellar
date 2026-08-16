@@ -23,7 +23,7 @@ tags:
 - [_config.yml](../../../_config.yml)
 - [package.json](../../../package.json)
 - [layout/_partial/comments/](../../../layout/_partial/comments/)
-- [source/css/_plugins/comments/artalk.styl](../../../source/css/_plugins/comments/artalk.styl)
+- [source/css/comments/artalk.styl](../../../source/css/comments/artalk.styl)
 
 </details>
 
@@ -36,6 +36,8 @@ tags:
 ## 架构概览
 
 所有评论系统遵循相同结构模式：每个系统的 EJS partial 渲染容器元素与定义初始化函数的 `<script>` 块。实际评论库在容器滚动进入视口时懒加载（`util.viewportLazyload`），初始化在页面加载时执行一次（整页导航，PJAX 已移除）。
+
+例外：Artalk 页面 URL 携带定位目标（`?atk_comment=<id>` 或 `#atk-comment-<id>`，如邮件通知链接与侧栏最近评论链接）时跳过视口懒加载立即初始化，以便 Artalk 的 `list-goto` 逻辑完成评论定位。
 
 **评论系统加载流程**
 
@@ -77,6 +79,7 @@ util.viewportLazyload(el, load_fn)
 
 - 元素进入浏览器视口前不加载评论库（内部用 IntersectionObserver）
 - 元素进入视口后调用 `load_fn` 加载 CSS/JS 并初始化
+- Artalk 例外：URL 含 `?atk_comment=<id>` / `#atk-comment-<id>` 时以 `viewportLazyload(el, load_fn, false)` 立即加载，保证邮件链接能自动滚动到目标评论
 
 **参考源码**：[layout/_partial/comments/artalk/script.ejs](../../../layout/_partial/comments/artalk/script.ejs)、[layout/_partial/comments/waline/script.ejs](../../../layout/_partial/comments/waline/script.ejs)、[layout/_partial/comments/twikoo/script.ejs](../../../layout/_partial/comments/twikoo/script.ejs)
 
@@ -117,9 +120,11 @@ Artalk 经其自托管 JS bundle 的 `Artalk.init()` 函数初始化。CSS 与 J
 
 **参考源码**：[layout/_partial/comments/artalk/script.ejs](../../../layout/_partial/comments/artalk/script.ejs)
 
+Artalk 邮件通知链接（`?atk_comment=<id>`，常带 `atk_notify_key`）与侧栏最近评论链接（`#atk-comment-<id>`）打开页面时自动定位到目标评论：主题检测到 atk 定位目标后跳过视口懒加载，并把评论 id 改写到 hash（保留 `atk_notify_key` 供已读回执），`list-loaded` 完成后清理残留查询参数，避免其 hash 监听干扰目录定位（#598）。
+
 Artalk 有专属 CSS 覆盖与 Stellar 设计系统集成。主题 CSS 变量在 `.cmt-body` 作用域内映射到 Artalk 内部 CSS 变量（`--at-color-*` 前缀）。
 
-**参考源码**：[source/css/_plugins/comments/artalk.styl](../../../source/css/_plugins/comments/artalk.styl)
+**参考源码**：[source/css/comments/artalk.styl](../../../source/css/comments/artalk.styl)
 
 ### Waline
 
@@ -183,7 +188,7 @@ flowchart LR
 
 ## Artalk CSS 集成
 
-Artalk 是唯一在 `source/css/_plugins/comments/artalk.styl` 中有专属 Stylus 覆盖的系统。覆盖策略把 Artalk 内部 CSS 变量系统桥接到 Stellar 设计令牌。
+Artalk 是唯一在 `source/css/comments/artalk.styl` 中有专属 Stylus 覆盖的系统。覆盖策略把 Artalk 内部 CSS 变量系统桥接到 Stellar 设计令牌。
 
 **CSS 变量映射**
 
@@ -212,11 +217,11 @@ flowchart LR
 
 映射限定在 `.cmt-body .artalk` 作用域，也应用于 `.atk-layer-wrap`（Artalk 模态层）及其深色模式变体，保证覆盖层中的自定义样式一致。
 
-**参考源码**：[source/css/_plugins/comments/artalk.styl](../../../source/css/_plugins/comments/artalk.styl)
+**参考源码**：[source/css/comments/artalk.styl](../../../source/css/comments/artalk.styl)
 
 Artalk 编辑器、评论卡片与列表页脚的布局覆盖（圆角、间距、按钮形状）限定在 `.cmt-body.artalk` 作用域，避免干扰其他组件。
 
-**参考源码**：[source/css/_plugins/comments/artalk.styl](../../../source/css/_plugins/comments/artalk.styl)
+**参考源码**：[source/css/comments/artalk.styl](../../../source/css/comments/artalk.styl)
 
 ---
 
