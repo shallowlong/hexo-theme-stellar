@@ -1,41 +1,44 @@
 <%
 function layoutDiv() {
-  var el = `<widget class="widget-wrapper${scrollreveal(' ')} recent post-list">`
-  // header
-  el += '<div class="widget-header dis-select">';
-  el += '<span class="name">' + (item.title || __("meta.recent_update_topic")) + '</span>';
+  var action = ''
   if (item.rss) {
-    el += '<a class="cap-action" id="rss" title="Subscribe" href="' + item.rss + '">';
-    el += icon('default:rss')
-    el += '</a>';
+    action += '<a class="cap-action" id="rss" title="Subscribe" href="' + escape_html(item.rss) + '">'
+    action += icon('default:rss')
+    action += '</a>'
   }
-  el += '</div>';
-  // body
-  var arr = [];
+  var arr = []
   // 只取绑定了 topic 的文章
   arr = site.posts.filter(p => p.title && p.title.length > 0 && p.topic && p.topic.length > 0)
   arr = arr.sort("updated", -1)
-  el += '<div class="widget-body fs14">'
   arr = arr.filter(p => p.title?.length > 0)
   arr.length = item.limit
+  var entries = []
   arr.forEach(post => {
     if (!post) { return }
-    el += `<a class="item title" href="${pretty_url(post.link || post.path)}">`
-    el += '<span class="title">'
+    var prefix = ''
     if (post.topic) {
       const topic = theme.topic.tree[post.topic];
-      let name = topic?.name || post?.topic;
-      if (name) {
-        el += '<strong>' + name + '</strong>' + '<span class="dot"></span>';
-      }
+      prefix = topic?.name || post.topic || '';
     }
-    el += post.title + '</span>';
-    el += '</a>';
-    el += '';
-  });
-  el += '</div>';
-  el += '</widget>';
-  return el;
+    entries.push({
+      href: pretty_url(post.link || post.path),
+      title: post.title,
+      prefix: prefix,
+      indicator: false
+    })
+  })
+  var body = partial('_partial/components/collection', {options: {
+    layout: 'list',
+    variant: 'nav',
+    density: 'compact',
+    items: entries
+  }})
+  return partial('_partial/components/widget-frame', {
+    className: 'recent-widget',
+    title: __('meta.recent_update_topic'),
+    action: action,
+    body: body
+  })
 }
 %>
 <%- layoutDiv() %>
