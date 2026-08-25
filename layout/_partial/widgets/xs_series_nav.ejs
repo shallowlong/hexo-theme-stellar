@@ -1,0 +1,63 @@
+<%
+// [xishu-custom] xs-series-nav
+// 左侧栏「自定义系列入口」widget：从上到下排列、占满侧边栏宽度的按钮列表，
+// 展示所有 series（topic）名称，点击进入具体 series 入口。
+function layoutDiv() {
+  var tree = (theme.topic && theme.topic.tree) ? theme.topic.tree : {}
+  var seriesList = []
+  if (Array.isArray(tree)) {
+    seriesList = tree
+  } else {
+    seriesList = Object.keys(tree).map(function (k) { return tree[k] })
+  }
+  var limit = parseInt(item.limit, 10)
+  if (Number.isFinite(limit) && limit > 0 && seriesList.length > limit) {
+    seriesList = seriesList.slice(0, limit)
+  }
+
+  // series 没有独立聚合页 /topic/<id>/（死链），本博客已补充真实一览页 /series/<id>/，
+  // 故 series 入口链接指向该系列的「系列一览页」
+  function seriesUrl(t) {
+    var id = t.id || ''
+    if (id) return '/series/' + id + '/'
+    if (t.path) return t.path
+    return '/series/'
+  }
+
+  var entries = seriesList.map(function (t) {
+    return {
+      href: pretty_url(seriesUrl(t)),
+      title: t.name || t.title || t.id,
+      icon: t.icon || 'default:book',
+      className: 'xs-series-nav-item',
+      indicator: false
+    }
+  })
+
+  var body = ''
+  if (entries.length > 0) {
+    body += partial('_partial/components/collection', {options: {
+      layout: 'list',
+      variant: 'nav',
+      density: 'compact',
+      className: 'xs-series-nav-list',
+      items: entries
+    }})
+  } else {
+    body += '<div class="widget-body fs14 cap">' + __('des.empty', 'series') + '</div>'
+  }
+
+  var footer = ''
+  if (item.more && item.more.url) {
+    footer += '<a class="widget-footer cap" href="' + url_for(item.more.url) + '">' + (item.more.title || __('btn.more')) + '</a>'
+  }
+
+  return partial('_partial/components/widget-frame', {
+    className: 'xs-series-nav',
+    title: item.title || __('btn.topic') || '系列',
+    body: body,
+    footer: footer
+  })
+}
+%>
+<%- layoutDiv() %>

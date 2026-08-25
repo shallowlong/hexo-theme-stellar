@@ -1,0 +1,43 @@
+<%
+// [xishu-custom] xs_series_detail
+// 单个系列一览页 /series/<id>/：展示该系列全部文章。
+// 排版：顶部一张头图，下方标题 + 副标题（居中），再下面是文章列表（保持主题现有样式）。
+const seriesId = page.series_id
+const seriesObj = (theme.topic && theme.topic.tree && seriesId) ? theme.topic.tree[seriesId] : null
+const seriesLabel = seriesObj ? (seriesObj.title || seriesObj.name) : (page.title || seriesId)
+const seriesDesc = seriesObj ? seriesObj.description : ''
+const seriesCover = seriesObj ? (seriesObj.cover || seriesObj.icon || '') : ''
+%>
+<%- partial('_partial/main/navbar/nav_tabs_blog') %>
+<div class="xs-series-detail">
+  <% if (seriesCover) { %>
+    <div class="xs-series-cover" style="background-image:url('<%- seriesCover %>')"></div>
+  <% } %>
+  <div class="xs-series-head">
+    <h1 class="xs-series-title"><%- escape_html(seriesLabel) %></h1>
+    <% if (seriesDesc) { %>
+      <p class="xs-series-desc"><%- escape_html(seriesDesc) %></p>
+    <% } %>
+  </div>
+  <div class="post-list post">
+    <% page.posts.each(function(post){ %>
+      <% if (post.indexing != false) { %>
+        <div class="post-card-wrap<%- scrollreveal(' ') %>">
+          <a class="post-card post card-hover card-hover--spotlight card-hover--tilt" href="<%- pretty_url(post.link || post.path) %>">
+            <%- partial('_partial/main/post_list/post_card', {post: post}) %>
+          </a>
+        </div>
+      <% } %>
+    <% }) %>
+  </div>
+</div>
+<% if (page.total > 1) { %>
+  <div class='paginator-wrap dis-select<%- scrollreveal(' ') %>'>
+    <%- paginator({
+      prev_text: icon('default:arrow-left'),
+      next_text: icon('default:arrow-right'),
+      force_prev_next: true,
+      escape: false
+    }) %>
+  </div>
+<% } %>

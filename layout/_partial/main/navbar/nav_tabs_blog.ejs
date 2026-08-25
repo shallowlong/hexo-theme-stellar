@@ -9,16 +9,18 @@ function layoutDiv() {
   el += '<div class="navbar-blur">';
   el += '<div class="navbar-container">';
   el += '<nav class="post">';
-  if (is_home()) {
-    el += '<a class="active" href="' + pretty_url(config.index_generator.path) + '">' + __("btn.recent_publish") + '</a>';
+  // [xishu-custom] 近期发布·所有（/all），首页 / 已改为纯文章列表
+  var allUrl = pretty_url('all');
+  if (page.__xs_index_all == true) {
+    el += '<a class="active" href="' + allUrl + '">' + __("btn.recent_publish") + '</a>';
   } else {
-    el += '<a href="' + pretty_url(config.index_generator.path) + '">' + __("btn.recent_publish") + '</a>';
+    el += '<a href="' + allUrl + '">' + __("btn.recent_publish") + '</a>';
   }
 
-  // 近期发布·记录
+  // [xishu-custom] 近期发布·记录（纯文章，现为首页 /）
   if (theme.site_tree?.index_blog?.base_dir) {
-    var recordUrl = pretty_url(theme.site_tree.index_blog.base_dir);
-    if (page.__xs_index_blog == true) {
+    var recordUrl = pretty_url('');
+    if (is_home()) {
       el += '<a class="active" href="' + recordUrl + '">' + __("btn.recent_publish_post") + '</a>';
     } else {
       el += '<a href="' + recordUrl + '">' + __("btn.recent_publish_post") + '</a>';
