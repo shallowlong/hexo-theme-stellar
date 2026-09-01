@@ -36,6 +36,9 @@ if (page.rightbar == null) {
     sidebar = site_tree.page.rightbar
   } else if (page.layout === 'post') {
     sidebar = site_tree.post.rightbar
+  } else if (page.__xs_index_all == true) {
+    // [xishu-custom] 近期发布·所有 /all 页面：复用主页 rightbar（tagcloud, advertisement, xs_bangumi）
+    sidebar = site_tree.home?.rightbar
   } else if (page.layout == null) {
     sidebar = site_tree.page.rightbar
   } else if (page.__xs_index_blog == true) {

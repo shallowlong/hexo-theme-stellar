@@ -1,0 +1,98 @@
+<%
+// [xishu-custom] xs-bangumi
+// 左侧栏「追番」widget：数据源 source/_data/bangumis.json（模板中为 site.data.bangumis），
+// 按配置的类型（wantWatch/watching/watched 任意搭配）与数量（limit）动态渲染：
+// 每项 = 左封面图 + 右侧 title / des（超过两行打……）/ myStars（我的打分）。
+function truncateStr(str, max) {
+  if (!str) return ''
+  str = String(str)
+  if (str.length <= max) return str
+  return str.slice(0, max) + '…'
+}
+
+function layoutDiv() {
+  var data = (site.data && site.data.bangumis) ? site.data.bangumis : {}
+  var typeMap = {
+    wantWatch: '想要看',
+    watching: '正在看',
+    watched: '已看过'
+  }
+  // 支持任意搭配；未配置时默认全部三种
+  var types = Array.isArray(item.types) && item.types.length > 0 ? item.types : ['wantWatch', 'watching', 'watched']
+
+  // 按配置顺序合并选中类型的数据，并记录所属类型
+  var list = []
+  types.forEach(function (t) {
+    var arr = data[t]
+    if (Array.isArray(arr)) {
+      arr.forEach(function (entry) {
+        entry.__xs_type = t
+        list.push(entry)
+      })
+    }
+  })
+
+  // 限定显示数量（可配置）
+  var limit = parseInt(item.limit, 10)
+  if (Number.isFinite(limit) && limit > 0 && list.length > limit) {
+    list = list.slice(0, limit)
+  }
+
+  var body = ''
+  if (list.length > 0) {
+    var desMax = parseInt(item.desMax, 10)
+    if (!Number.isFinite(desMax) || desMax < 1) {
+      desMax = 80
+    }
+    var els = list.map(function (entry) {
+      var title = entry.title || ''
+      var cover = entry.cover || ''
+      var des = truncateStr(entry.des, desMax)
+      var myStars = parseInt(entry.myStars, 10)
+      var typeLabel = typeMap[entry.__xs_type] || entry.__xs_type
+      var href = entry.id ? 'https://bgm.tv/subject/' + entry.id : '#'
+
+      var el = ''
+      el += '<a class="xs-bangumi-item" href="' + escape_html(href) + '" title="' + escape_html(title + ' · ' + typeLabel) + '" target="_blank" rel="external nofollow noopener noreferrer">'
+      if (cover) {
+        el += '<img class="xs-bangumi-cover" src="' + escape_html(cover) + '" alt="' + escape_html(title) + '" loading="lazy">'
+      }
+      el += '<span class="xs-bangumi-info">'
+      el += '<span class="xs-bangumi-title">' + escape_html(title) + '</span>'
+      if (des) {
+        el += '<span class="xs-bangumi-des">' + escape_html(des) + '</span>'
+      }
+      if (Number.isFinite(myStars) && myStars > 0) {
+        // bgm 评分为 10 分制，换算为 5 星展示
+        var filled = Math.max(0, Math.min(5, Math.round(myStars / 2)))
+        var starStr = ''
+        for (var i = 0; i < 5; i++) {
+          starStr += i < filled ? '★' : '☆'
+        }
+        el += '<span class="xs-bangumi-stars">' + starStr + '<span class="num">' + myStars + '</span></span>'
+      } else {
+        el += '<span class="xs-bangumi-stars xs-bangumi-stars--none">未评分</span>'
+      }
+      el += '</span>'
+      el += '</a>'
+      return el
+    })
+    body = '<div class="xs-bangumi-list">' + els.join('') + '</div>'
+  } else {
+    body = '<div class="widget-body fs14 cap">暂无追番记录</div>'
+  }
+
+  var footer = ''
+  if (item.more && item.more.url) {
+    footer += '<a class="widget-footer cap" href="' + url_for(item.more.url) + '">' + (item.more.title || __('btn.more')) + '</a>'
+  }
+
+  return partial('_partial/components/widget-frame', {
+    className: 'xs-bangumi',
+    title: item.title || '追番',
+    body: body,
+    footer: footer
+  })
+}
+%>
+<%- layoutDiv() %>
